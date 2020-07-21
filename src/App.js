@@ -1,45 +1,59 @@
 import React, { useState } from "react";
-
-import "./App.css";
+import Other from "./Other";
 
 function App() {
-  const [amount, setAmount] = useState("");
-  const [breakDown, setBreakDown] = useState("");
-  const [part, setPart] = useState([]);
-  const getAmt = (e) => {
-    setAmount(e.target.value);
-  };
+  const [fields, setFields] = useState([{ value: null }]);
 
-  const getBreakDown = (e) => {
-    setBreakDown(e.target.value);
-  };
+  // give dynamic inputs
+  function handleChange(i, event) {
+    console.log(i);
+    const values = [...fields];
+    console.log(values);
+    values[i].value = event.target.value;
+    setFields(values);
+  }
 
-  const getTotalBreakDown = (amount, breakDown) => {
-    let installment = Number(amount) / Number(breakDown);
-    let equalBreakDown = [...Array(Number(breakDown))].map((data) => {
-      return installment;
-    });
-    setPart(equalBreakDown);
-    return part;
-  };
+  function handleAdd() {
+    const values = [...fields];
+    console.log(values);
+    values.push({ value: null });
+    setFields(values);
+  }
+
+  function handleRemove(i) {
+    const values = [...fields];
+    console.log(values);
+    values.splice(i, 1);
+    setFields(values);
+  }
 
   return (
-    <div className="App">
-      {console.log(amount, breakDown, part)}
-      <input value={amount} onChange={getAmt}></input>
-      <input value={breakDown} onChange={getBreakDown}></input>
-      <button onClick={() => getTotalBreakDown(amount, breakDown)}>
-        calculate
-      </button>
-      {part.map((data) => (
-        <div>
-          <span>amount to pay {data}</span>
-          <input></input>
-          {/* on pay button 4-5 condition */}
-          <button>Pay</button>
-        </div>
-      ))}
-    </div>
+    <React.Fragment>
+      <div className="App">
+        <h1>Hello CodeSandbox</h1>
+
+        <button type="button" onClick={() => handleAdd()}>
+          +
+        </button>
+
+        {fields.map((field, idx) => {
+          return (
+            <div key={`${field}-${idx}`}>
+              <input
+                type="text"
+                placeholder="Enter text"
+                value={field.value || ""}
+                onChange={(e) => handleChange(idx, e)}
+              />
+              <button type="button" onClick={() => handleRemove(idx)}>
+                X
+              </button>
+            </div>
+          );
+        })}
+      </div>
+      <Other></Other>
+    </React.Fragment>
   );
 }
 
