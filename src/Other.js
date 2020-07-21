@@ -40,7 +40,23 @@ function Other() {
 
       {eachInstallment.map((data, index) => (
         <React.Fragment>
-          <input id={index} value={inputVal[index].value}></input>
+          <input
+            id={index}
+            value={inputVal[index].value}
+            onChange={(e) => {
+              const value = e.target.value;
+              setInputVal((inputVal) =>
+                inputVal.map((inputs, ind) =>
+                  ind === index
+                    ? {
+                        ...inputs,
+                        value,
+                      }
+                    : inputs
+                )
+              );
+            }}
+          ></input>
           <button>Pay</button>
         </React.Fragment>
       ))}
