@@ -4,7 +4,7 @@ function Other() {
   const [amount, setAmount] = useState(undefined);
   const [breakDown, setBreakDown] = useState(undefined);
   const [eachInstallment, setEachInstallment] = useState([]);
-  const [inputVal, setInputVal] = useState([{ value: "ss" }]);
+  const [inputVal, setInputVal] = useState([{ value: "" }]);
 
   const getAmt = (e) => {
     setAmount(e.target.value);
@@ -13,28 +13,24 @@ function Other() {
   const getBreakDown = (e) => {
     setBreakDown(e.target.value);
   };
-  // {value: ""}
+
   console.log(inputVal);
-  console.log(inputVal[0].value);
 
   const getTotalBreakDown = (amount = undefined, breakDown) => {
     let installment = Number(amount) / Number(breakDown);
+    const values = [...inputVal];
     let equalBreakDown = [...Array(Number(breakDown))].map((data) => {
+      values.push({ value: null });
+      setInputVal(values);
       return installment;
     });
 
-    const values = [...inputVal];
-    for (let data in equalBreakDown) {
-      values.push({ value: null });
-      setInputVal(values);
-    }
     setEachInstallment([...equalBreakDown]);
-
     return eachInstallment;
   };
 
   return (
-    <div>
+    <>
       <input value={amount} onChange={getAmt}></input>
       <input value={breakDown} onChange={getBreakDown}></input>
 
@@ -48,7 +44,7 @@ function Other() {
           <button>Pay</button>
         </React.Fragment>
       ))}
-    </div>
+    </>
   );
 }
 
