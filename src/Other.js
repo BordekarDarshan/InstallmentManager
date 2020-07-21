@@ -57,7 +57,7 @@ function Other() {
               );
             }}
           ></input>
-          <button>Pay</button>
+          <button>Pay {data}</button>
         </React.Fragment>
       ))}
     </>
