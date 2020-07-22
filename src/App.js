@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { doBreakdown } from "./Util/doBreakdown";
+import { payInstallment } from "./Util/payInstallment";
 
 function App() {
   const [amount, setAmount] = useState(0);
@@ -15,12 +16,12 @@ function App() {
     const { value } = e.target;
     setBreakdown(value);
   };
-
+  console.log(installmentStructure);
   return (
     <div>
       <input onChange={getAmount}></input>
       <input onChange={getBreakdown}></input>
-      {console.log(installmentStructure)}
+
       <button
         onClick={() => doBreakdown(amount, breakdown, setInstallmentStructure)}
       >
@@ -32,7 +33,7 @@ function App() {
           <input
             value={content.value}
             onChange={(e) => {
-              const value = e.target.value;
+              const value = Number(e.target.value);
               setInstallmentStructure((installmentStructure) =>
                 installmentStructure.map((content, i) =>
                   content.id === index
@@ -46,7 +47,11 @@ function App() {
             }}
           ></input>
 
-          <button>Pay {content.installment}</button>
+          <button
+            onClick={() => payInstallment(index, setInstallmentStructure)}
+          >
+            Pay {content.installment}
+          </button>
         </p>
       ))}
     </div>
