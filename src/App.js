@@ -6,6 +6,7 @@ function App() {
   const [amount, setAmount] = useState(0);
   const [breakdown, setBreakdown] = useState(0);
   const [installmentStructure, setInstallmentStructure] = useState([]);
+  const [paidInstallment, setPaidInstallment] = useState([]);
 
   const getAmount = (e) => {
     const { value } = e.target;
@@ -52,13 +53,19 @@ function App() {
               payInstallment(
                 index,
                 setInstallmentStructure,
-                installmentStructure
+                installmentStructure,
+                setPaidInstallment,
+                paidInstallment
               )
             }
           >
             Pay {content.installment}
           </button>
         </p>
+      ))}
+
+      {paidInstallment.map((data) => (
+        <h1>{data.installment}</h1>
       ))}
     </div>
   );

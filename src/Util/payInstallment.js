@@ -1,7 +1,9 @@
 export const payInstallment = (
   index,
   setInstallmentStructure,
-  installmentStructure
+  installmentStructure,
+  setPaidInstallment,
+  paidInstallment
 ) => {
   setInstallmentStructure([...installmentStructure]);
 
@@ -12,6 +14,7 @@ export const payInstallment = (
         if (content.installment < content.value) {
           let advance = content.value - content.installment;
           next.installment = next.installment - advance;
+          setPaidInstallment([...paidInstallment, { ...content }]);
         }
       } else {
         return { ...content };
