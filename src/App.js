@@ -28,7 +28,7 @@ function App() {
       </button>
 
       {installmentStructure.map((content, index) => (
-        <React.Fragment>
+        <p>
           <input
             value={content.value}
             onChange={(e) => {
@@ -45,8 +45,9 @@ function App() {
               );
             }}
           ></input>
+
           <button>Pay {content.installment}</button>
-        </React.Fragment>
+        </p>
       ))}
     </div>
   );
