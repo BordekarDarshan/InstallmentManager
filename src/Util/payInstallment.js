@@ -3,10 +3,9 @@ export const payInstallment = (
   setInstallmentStructure,
   installmentStructure,
   setPaidInstallment,
-  paidInstallment
+  paidInstallment,
+  option
 ) => {
-  setInstallmentStructure([...installmentStructure]);
-
   setInstallmentStructure(
     installmentStructure.map((content, i, elements) => {
       if (index === i) {
@@ -18,6 +17,16 @@ export const payInstallment = (
         }
         if (content.installment === content.value) {
           setPaidInstallment([...paidInstallment, { ...content }]);
+        }
+        if (content.installment > content.value) {
+          if (option === "adjust") {
+            console.log(option);
+            let remain = content.installment - content.value;
+            next.installment = next.installment + remain;
+            setPaidInstallment([...paidInstallment, { ...content }]);
+          }
+          if (option === "createNew") {
+          }
         }
       }
 
