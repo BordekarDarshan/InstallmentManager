@@ -16,8 +16,9 @@ export const payInstallment = (
           next.installment = next.installment - advance;
           setPaidInstallment([...paidInstallment, { ...content }]);
         }
-      } else {
-        return { ...content };
+        if (content.installment === content.value) {
+          setPaidInstallment([...paidInstallment, { ...content }]);
+        }
       }
 
       return { ...content };
