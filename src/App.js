@@ -56,7 +56,7 @@ function App() {
                 installmentStructure,
                 setPaidInstallment,
                 paidInstallment,
-                "createNew"
+                "adjust"
               )
             }
           >
