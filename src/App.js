@@ -48,7 +48,13 @@ function App() {
           ></input>
 
           <button
-            onClick={() => payInstallment(index, setInstallmentStructure)}
+            onClick={() =>
+              payInstallment(
+                index,
+                setInstallmentStructure,
+                installmentStructure
+              )
+            }
           >
             Pay {content.installment}
           </button>
