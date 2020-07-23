@@ -16,12 +16,12 @@ export const payInstallment = (
             if (index !== installmentStructure.length - 1) {
               let current = installmentStructure[index];
               let next = installmentStructure[index + 1];
+              if (current.value >= 0) {
+                let adv = current.value - current.installment;
 
-              let adv = current.value - current.installment;
-              if (next.value >= 0) {
                 next.value = adv;
 
-                if (current.value > current.installment) {
+                if (current.value >= current.installment) {
                   current.installment = 0;
                 }
                 if (current.value < current.installment) {
@@ -31,6 +31,20 @@ export const payInstallment = (
               setInstallmentStructure([...installmentStructure]);
 
               console.log("current", current, "next", next);
+            } else {
+              let current = installmentStructure[index];
+              if (current.value >= 0) {
+                let adv = current.value - current.installment;
+
+                next.value = adv;
+
+                if (current.value >= current.installment) {
+                  current.installment = 0;
+                }
+                if (current.value < current.installment) {
+                  current.installment = current.installment - current.value;
+                }
+              }
             }
           }
         } else {
