@@ -17,7 +17,7 @@ function App() {
     const { value } = e.target;
     setBreakdown(value);
   };
-  console.log(installmentStructure);
+
   return (
     <div>
       <input onChange={getAmount}></input>

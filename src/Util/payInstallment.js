@@ -10,12 +10,22 @@ export const payInstallment = (
     if (index === i) {
       if (content.value > content.installment) {
         let next = elements[i + 1];
-        let nextn = elements[i + 2];
         let advance = content.value - content.installment;
         if (advance > next.installment) {
-          next.installment = 0;
-          nextn.value = advance - nextn.installment;
+          for (let index = 0; index < installmentStructure.length; index++) {
+            if (index !== installmentStructure.length - 1) {
+              let next = installmentStructure[index + 1];
+              let current = installmentStructure[index];
+              let adv = current.value - current.installment;
+              next.installment = adv - next.installment;
+              next.value = adv;
+              setInstallmentStructure([...installmentStructure]);
+              console.log("adv", adv, "next", next.installment);
+            }
+          }
         } else {
+          let next = elements[i + 1];
+          let advance = content.value - content.installment;
           next.installment = next.installment - advance;
           setInstallmentStructure([...installmentStructure]);
           setPaidInstallment([...paidInstallment, { ...content }]);
