@@ -60,9 +60,10 @@ export const payInstallment = (
         }
         if (option === "createNew") {
           let remain = content.installment - content.value;
+          console.log(content);
           setInstallmentStructure([
             ...installmentStructure,
-            { id: 4, installment: remain, value: "" },
+            { id: installmentStructure.length, installment: remain, value: "" },
           ]);
         }
       }
