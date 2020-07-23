@@ -39,8 +39,6 @@ export const payInstallment = (
                 current.installment = current.installment - current.value;
               }
               setInstallmentStructure([...installmentStructure]);
-
-              console.log("current", current, "next", next);
             }
           }
         } else {
