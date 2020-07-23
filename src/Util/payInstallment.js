@@ -8,6 +8,13 @@ export const payInstallment = (
 ) => {
   installmentStructure.map((content, i, elements) => {
     if (index === i) {
+      if (content.id === installmentStructure.length - 1) {
+        if (content.value > content.installment) {
+          alert(`You entered more than ${content.installment}`);
+          content.value = content.installment;
+          setInstallmentStructure([...installmentStructure]);
+        }
+      }
       if (content.value > content.installment) {
         let next = elements[i + 1];
         let advance = content.value - content.installment;
@@ -38,6 +45,7 @@ export const payInstallment = (
               if (current.id === installmentStructure.length - 1) {
                 current.installment = current.installment - current.value;
               }
+
               setInstallmentStructure([...installmentStructure]);
             }
           }
@@ -45,6 +53,8 @@ export const payInstallment = (
           let next = elements[i + 1];
           let advance = content.value - content.installment;
           next.installment = next.installment - advance;
+          console.log([installmentStructure]);
+
           setInstallmentStructure([...installmentStructure]);
           setPaidInstallment([...paidInstallment, { ...content }]);
         }
@@ -62,7 +72,6 @@ export const payInstallment = (
         }
         if (option === "createNew") {
           let remain = content.installment - content.value;
-          console.log(content);
           setInstallmentStructure([
             ...installmentStructure,
             { id: installmentStructure.length, installment: remain, value: "" },
