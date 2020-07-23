@@ -29,10 +29,14 @@ export const payInstallment = (
                   current.installment = 0;
                 }
                 if (current.value <= current.installment) {
-                  console.log(current.value, current.installment);
                   current.installment = current.installment - current.value;
-                  console.log(current.value, current.installment);
                 }
+              }
+            } else {
+              let current = installmentStructure[index];
+
+              if (current.id === installmentStructure.length - 1) {
+                current.installment = current.installment - current.value;
               }
               setInstallmentStructure([...installmentStructure]);
 
