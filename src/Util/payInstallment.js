@@ -18,20 +18,18 @@ export const payInstallment = (
               let next = installmentStructure[index + 1];
 
               let adv = current.value - current.installment;
-              // 5
-              console.log(adv);
-              if (adv > 0) {
-                //true
+              if (next.value >= 0) {
                 next.value = adv;
-                next.installment = next.value - next.installment;
 
-                console.log(adv);
-                setInstallmentStructure([...installmentStructure]);
+                if (current.value > current.installment) {
+                  current.installment = 0;
+                }
+                if (current.value < current.installment) {
+                  current.installment = current.installment - current.value;
+                }
               }
+              setInstallmentStructure([...installmentStructure]);
 
-              // if (current.installment > 0) {
-              //   next.installment = current.installment + 1;
-              // }
               console.log("current", current, "next", next);
             }
           }
