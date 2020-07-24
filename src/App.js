@@ -118,7 +118,7 @@ function App() {
         createNewFeature={createNewFeature}
       ></PopUp>
       <React.Fragment>
-        <span>Installment History</span>
+        {paidInstallment.length > 0 && <span>Installment History</span>}
         <div className="paymentHistory">
           {paidInstallment.map((data) => (
             <div className="box">
