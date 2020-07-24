@@ -66,6 +66,7 @@ function App() {
             ></Input>
 
             <Button
+              eachInstallmentButton
               onClick={() =>
                 payInstallment(
                   index,
