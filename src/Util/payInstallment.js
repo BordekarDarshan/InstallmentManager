@@ -108,6 +108,7 @@ export const payInstallment = (
               value: "",
             },
           ]);
+          setPaidInstallment([...paidInstallment, { ...content }]);
         }
       }
     }
