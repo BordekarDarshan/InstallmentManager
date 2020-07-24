@@ -16,7 +16,6 @@ export const payInstallment = (
 
       // Input > Actual Amout
       if (content.value > mapTotalInstallment) {
-        console.log(mapTotalInstallment);
         alert("exceed");
         return false;
       }
@@ -29,11 +28,10 @@ export const payInstallment = (
         // Input > next Installment.
         let extraPayment = content.value - content.installment;
         let elementNext = next[i + 1];
-        console.log(elementNext);
+
         if (extraPayment <= elementNext.installment) {
           content.installment = 0;
           elementNext.installment = elementNext.installment - extraPayment;
-          installmentStructure.splice(i, 1);
           setInstallmentStructure([...installmentStructure]);
           setPaidInstallment([...paidInstallment, { ...content }]);
         } else {
@@ -49,11 +47,20 @@ export const payInstallment = (
               }
               if (current.value >= current.installment) {
                 current.installment = 0;
+                setTimeout(() => {
+                  if (current.installment === 0) {
+                    const gg = installmentStructure.indexOf(current);
+                    if (gg > -1) {
+                      installmentStructure.splice(i, gg + 1);
+                      setInstallmentStructure([...installmentStructure]);
+                      console.log(current);
+                    }
+                  }
+                }, 1000);
               }
               if (current.value <= current.installment) {
                 current.installment = current.installment - current.value;
               }
-              installmentStructure.splice(i, 1);
               setInstallmentStructure([...installmentStructure]);
               setPaidInstallment([...paidInstallment, { ...content }]);
             } else {
@@ -62,8 +69,21 @@ export const payInstallment = (
               if (current.id === installmentStructure.length - 1) {
                 current.installment = current.installment - current.value;
               }
-              console.log("current", current, "Next", next);
-              installmentStructure.splice(i, 1);
+
+              if (current.value >= current.installment) {
+                current.installment = 0;
+                setTimeout(() => {
+                  if (current.installment === 0) {
+                    const gg = installmentStructure.indexOf(current);
+                    if (gg > -1) {
+                      installmentStructure.splice(i, gg + 1);
+                      setInstallmentStructure([...installmentStructure]);
+                      console.log(current);
+                    }
+                  }
+                }, 2000);
+              }
+
               setInstallmentStructure([...installmentStructure]);
               setPaidInstallment([...paidInstallment, { ...content }]);
             }
@@ -116,7 +136,7 @@ export const payInstallment = (
         }
       }
     }
-    console.log(installmentStructure);
+
     return true;
   });
 };
