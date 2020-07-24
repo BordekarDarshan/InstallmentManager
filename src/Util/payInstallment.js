@@ -69,7 +69,7 @@ export const payInstallment = (
         }
       }
       // Input === next Installment.
-      if (content.installment === content.value) {
+      if (content.installment == content.value) {
         installmentStructure.splice(i, 1);
         setInstallmentStructure([...installmentStructure]);
         setPaidInstallment([...paidInstallment, { ...content }]);
@@ -91,7 +91,6 @@ export const payInstallment = (
             ]);
             setPaidInstallment([...paidInstallment, { ...content }]);
           } else {
-            console.log(content);
             let elementNext = next[i + 1];
 
             let remain = content.installment - content.value;
@@ -116,7 +115,7 @@ export const payInstallment = (
         }
       }
     }
-    console.log(installmentStructure);
+
     return true;
   });
 };
