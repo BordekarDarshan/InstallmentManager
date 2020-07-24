@@ -57,7 +57,12 @@ function App() {
 
         <Button
           onClick={() =>
-            doBreakdown(amount, breakdown, setInstallmentStructure)
+            doBreakdown(
+              amount,
+              breakdown,
+              setInstallmentStructure,
+              setPaidInstallment
+            )
           }
         >
           Make Installment
