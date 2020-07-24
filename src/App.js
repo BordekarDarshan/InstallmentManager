@@ -45,7 +45,6 @@ function App() {
     <div className="container">
       <div className="inputInstallmentWrapper">
         <Input
-          type="text"
           onChange={getAmount}
           placeholder="Enter amount..."
           inputInstallment
