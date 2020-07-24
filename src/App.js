@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import Button from "./components/Button/Button";
+import Input from "./components/Input/Input";
 import { doBreakdown } from "./Util/doBreakdown";
 import { payInstallment } from "./Util/payInstallment";
+import "./App.css";
 
 function App() {
   const [amount, setAmount] = useState(0);
@@ -19,51 +22,66 @@ function App() {
   };
 
   return (
-    <div>
-      <input onChange={getAmount}></input>
-      <input onChange={getBreakdown}></input>
+    <div className="container">
+      <div className="inputInstallmentWrapper">
+        <Input
+          type="text"
+          onChange={getAmount}
+          placeholder="Enter amount..."
+          inputInstallment
+        ></Input>
+        <Input
+          onChange={getBreakdown}
+          placeholder="installments... "
+          inputInstallment
+        ></Input>
 
-      <button
-        onClick={() => doBreakdown(amount, breakdown, setInstallmentStructure)}
-      >
-        Make Installment
-      </button>
+        <Button
+          onClick={() =>
+            doBreakdown(amount, breakdown, setInstallmentStructure)
+          }
+        >
+          Make Installment
+        </Button>
+      </div>
+      <div className="installmentStructureWrapper">
+        {installmentStructure.map((content, index) => (
+          <div className="card" style={{ width: "18rem", margin: "2%" }}>
+            <Input
+              eachInstallment
+              value={content.value}
+              onChange={(e) => {
+                const value = Number(e.target.value);
+                setInstallmentStructure((installmentStructure) =>
+                  installmentStructure.map((content, i) =>
+                    content.id === index
+                      ? {
+                          ...content,
+                          value,
+                        }
+                      : content
+                  )
+                );
+              }}
+            ></Input>
 
-      {installmentStructure.map((content, index) => (
-        <p>
-          <input
-            value={content.value}
-            onChange={(e) => {
-              const value = Number(e.target.value);
-              setInstallmentStructure((installmentStructure) =>
-                installmentStructure.map((content, i) =>
-                  content.id === index
-                    ? {
-                        ...content,
-                        value,
-                      }
-                    : content
+            <Button
+              onClick={() =>
+                payInstallment(
+                  index,
+                  setInstallmentStructure,
+                  installmentStructure,
+                  setPaidInstallment,
+                  paidInstallment,
+                  "adjust"
                 )
-              );
-            }}
-          ></input>
-
-          <button
-            onClick={() =>
-              payInstallment(
-                index,
-                setInstallmentStructure,
-                installmentStructure,
-                setPaidInstallment,
-                paidInstallment,
-                "adjust"
-              )
-            }
-          >
-            Pay {content.installment}
-          </button>
-        </p>
-      ))}
+              }
+            >
+              Pay {content.installment}
+            </Button>
+          </div>
+        ))}
+      </div>
 
       {paidInstallment.map((data) => (
         <h1>{data.value}</h1>

@@ -14,6 +14,7 @@ export const payInstallment = (
 
       // Input > Actual Amout
       if (content.value > mapTotalInstallment) {
+        console.log(mapTotalInstallment);
         alert("exceed");
         return false;
       }
