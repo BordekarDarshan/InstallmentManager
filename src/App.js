@@ -81,7 +81,7 @@ function App() {
                 const value = Number(e.target.value);
                 setInstallmentStructure((installmentStructure) =>
                   installmentStructure.map((content, i) =>
-                    content.id === index
+                    i === index
                       ? {
                           ...content,
                           value,

@@ -20,6 +20,7 @@ export const payInstallment = (
         alert("exceed");
         return false;
       }
+
       if (content.value > content.installment) {
         if (index === installmentStructure.length - 1) {
           alert("exceed");
@@ -32,7 +33,7 @@ export const payInstallment = (
         if (extraPayment <= elementNext.installment) {
           content.installment = 0;
           elementNext.installment = elementNext.installment - extraPayment;
-
+          installmentStructure.splice(i, 1);
           setInstallmentStructure([...installmentStructure]);
           setPaidInstallment([...paidInstallment, { ...content }]);
         } else {
@@ -52,7 +53,7 @@ export const payInstallment = (
               if (current.value <= current.installment) {
                 current.installment = current.installment - current.value;
               }
-
+              installmentStructure.splice(i, 1);
               setInstallmentStructure([...installmentStructure]);
               setPaidInstallment([...paidInstallment, { ...content }]);
             } else {
@@ -62,7 +63,7 @@ export const payInstallment = (
                 current.installment = current.installment - current.value;
               }
               console.log("current", current, "Next", next);
-
+              installmentStructure.splice(i, 1);
               setInstallmentStructure([...installmentStructure]);
               setPaidInstallment([...paidInstallment, { ...content }]);
             }
@@ -71,6 +72,8 @@ export const payInstallment = (
       }
       // Input === next Installment.
       if (content.installment === content.value) {
+        installmentStructure.splice(i, 1);
+        setInstallmentStructure([...installmentStructure]);
         setPaidInstallment([...paidInstallment, { ...content }]);
       }
       // Input < next Installment.
@@ -79,7 +82,7 @@ export const payInstallment = (
         if (lessInstallmentFeature === "adjust") {
           if (content.id === installmentStructure.length - 1) {
             let remain = content.installment - content.value;
-
+            installmentStructure.splice(i, 1);
             setInstallmentStructure([
               ...installmentStructure,
               {
@@ -93,13 +96,14 @@ export const payInstallment = (
             let elementNext = next[i + 1];
             let remain = content.installment - content.value;
             elementNext.installment = elementNext.installment + remain;
+            installmentStructure.splice(i, 1);
             setInstallmentStructure([...installmentStructure]);
             setPaidInstallment([...paidInstallment, { ...content }]);
           }
         }
         if (lessInstallmentFeature === "createNew") {
           let remain = content.installment - content.value;
-
+          installmentStructure.splice(i, 1);
           setInstallmentStructure([
             ...installmentStructure,
             {
@@ -112,6 +116,7 @@ export const payInstallment = (
         }
       }
     }
+    console.log(installmentStructure);
     return true;
   });
 };
