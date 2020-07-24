@@ -8,17 +8,17 @@ export const payInstallment = (
 ) => {
   installmentStructure.map((content, i, next) => {
     if (index === i) {
+      let mapTotalInstallment = installmentStructure
+        .map((data) => data.installment)
+        .reduce((prev, next) => prev + next, 0);
+
+      // Input > Actual Amout
+      if (content.value > mapTotalInstallment) {
+        alert("exceed");
+        return false;
+      }
       if (content.value > content.installment) {
         // Tracker
-        let mapTotalInstallment = installmentStructure
-          .map((data) => data.installment)
-          .reduce((prev, next) => prev + next, 0);
-
-        // Input > Actual Amout
-        if (content.value > mapTotalInstallment) {
-          alert("exceed");
-          return false;
-        }
 
         // Input > next Installment.
         let extraPayment = content.value - content.installment;
@@ -43,17 +43,53 @@ export const payInstallment = (
               }
               if (current.value <= current.installment) {
                 current.installment = current.installment - current.value;
-              } else {
-                let current = installmentStructure[index];
-
-                if (current.id === installmentStructure.length - 1) {
-                  current.installment = current.installment - current.value;
-                }
-                console.log("current", current, "Next", next);
-                setInstallmentStructure([...installmentStructure]);
               }
+              setInstallmentStructure([...installmentStructure]);
+            } else {
+              let current = installmentStructure[index];
+
+              if (current.id === installmentStructure.length - 1) {
+                current.installment = current.installment - current.value;
+              }
+              console.log("current", current, "Next", next);
+              setInstallmentStructure([...installmentStructure]);
             }
           }
+        }
+      }
+      if (content.installment === content.value) {
+        setPaidInstallment([...paidInstallment, { ...content }]);
+      }
+      if (content.installment > content.value) {
+        if (option === "adjust") {
+          if (content.id === installmentStructure.length - 1) {
+            let remain = content.installment - content.value;
+            setInstallmentStructure([
+              ...installmentStructure,
+              {
+                id: installmentStructure.length,
+                installment: remain,
+                value: "",
+              },
+            ]);
+          } else {
+            let elementNext = next[i + 1];
+            let remain = content.installment - content.value;
+            elementNext.installment = elementNext.installment + remain;
+            setInstallmentStructure([...installmentStructure]);
+            setPaidInstallment([...paidInstallment, { ...content }]);
+          }
+        }
+        if (option === "createNew") {
+          let remain = content.installment - content.value;
+          setInstallmentStructure([
+            ...installmentStructure,
+            {
+              id: installmentStructure.length,
+              installment: remain,
+              value: "",
+            },
+          ]);
         }
       }
     }
