@@ -52,7 +52,7 @@ export const payInstallment = (
               if (current.value <= current.installment) {
                 current.installment = current.installment - current.value;
               }
-              installmentStructure.splice(index, 1);
+
               setInstallmentStructure([...installmentStructure]);
               setPaidInstallment([...paidInstallment, { ...content }]);
             } else {
@@ -114,6 +114,11 @@ export const payInstallment = (
           setPaidInstallment([...paidInstallment, { ...content }]);
         }
       }
+
+      let a = installmentStructure.filter((data) => data.installment === 0);
+
+      installmentStructure.splice(i, a.length);
+      setInstallmentStructure([...installmentStructure]);
     }
 
     return true;
