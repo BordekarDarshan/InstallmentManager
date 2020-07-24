@@ -12,3 +12,14 @@
   justify-content: center;
   margin: 3%;
 }
+
+.paymentHistory {
+  display: flex;
+}
+
+.box {
+  display: flex;
+  flex-flow: column;
+  flex-wrap: wrap;
+  width: 20%;
+}

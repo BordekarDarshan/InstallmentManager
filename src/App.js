@@ -117,11 +117,17 @@ function App() {
         adjustFeature={adjustFeature}
         createNewFeature={createNewFeature}
       ></PopUp>
-      {paidInstallment.map((data) => (
+      <React.Fragment>
+        <span>Installment History</span>
         <div className="paymentHistory">
-          <h1>{data.value}</h1>
+          {paidInstallment.map((data) => (
+            <div className="box">
+              <span>Installment {data.id + 1}</span>
+              <h1>Rs. {data.value}</h1>
+            </div>
+          ))}
         </div>
-      ))}
+      </React.Fragment>
     </div>
   );
 }
