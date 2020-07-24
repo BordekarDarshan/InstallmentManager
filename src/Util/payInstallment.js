@@ -26,7 +26,9 @@ export const payInstallment = (
         if (extraPayment <= elementNext.installment) {
           content.installment = 0;
           elementNext.installment = elementNext.installment - extraPayment;
+
           setInstallmentStructure([...installmentStructure]);
+          setPaidInstallment([...paidInstallment, { ...content }]);
         } else {
           for (let index = i; index < installmentStructure.length; index++) {
             if (index !== installmentStructure.length - 1) {
@@ -44,7 +46,9 @@ export const payInstallment = (
               if (current.value <= current.installment) {
                 current.installment = current.installment - current.value;
               }
+
               setInstallmentStructure([...installmentStructure]);
+              setPaidInstallment([...paidInstallment, { ...content }]);
             } else {
               let current = installmentStructure[index];
 
@@ -52,18 +56,23 @@ export const payInstallment = (
                 current.installment = current.installment - current.value;
               }
               console.log("current", current, "Next", next);
+
               setInstallmentStructure([...installmentStructure]);
+              setPaidInstallment([...paidInstallment, { ...content }]);
             }
           }
         }
       }
+      // Input === next Installment.
       if (content.installment === content.value) {
         setPaidInstallment([...paidInstallment, { ...content }]);
       }
+      // Input < next Installment.
       if (content.installment > content.value) {
         if (option === "adjust") {
           if (content.id === installmentStructure.length - 1) {
             let remain = content.installment - content.value;
+
             setInstallmentStructure([
               ...installmentStructure,
               {
@@ -72,6 +81,7 @@ export const payInstallment = (
                 value: "",
               },
             ]);
+            setPaidInstallment([...paidInstallment, { ...content }]);
           } else {
             let elementNext = next[i + 1];
             let remain = content.installment - content.value;
@@ -82,6 +92,7 @@ export const payInstallment = (
         }
         if (option === "createNew") {
           let remain = content.installment - content.value;
+
           setInstallmentStructure([
             ...installmentStructure,
             {

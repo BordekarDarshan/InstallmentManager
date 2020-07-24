@@ -66,7 +66,7 @@ function App() {
       ))}
 
       {paidInstallment.map((data) => (
-        <h1>{data.installment}</h1>
+        <h1>{data.value}</h1>
       ))}
     </div>
   );
