@@ -9,6 +9,7 @@ export const payInstallment = (
 ) => {
   installmentStructure.map((content, i, next) => {
     if (index === i) {
+      // Tracker
       let mapTotalInstallment = installmentStructure
         .map((data) => data.installment)
         .reduce((prev, next) => prev + next, 0);
@@ -20,11 +21,10 @@ export const payInstallment = (
         return false;
       }
       if (content.value > content.installment) {
-        // Tracker
-
         // Input > next Installment.
         let extraPayment = content.value - content.installment;
         let elementNext = next[i + 1];
+        console.log(elementNext);
         if (extraPayment <= elementNext.installment) {
           content.installment = 0;
           elementNext.installment = elementNext.installment - extraPayment;
