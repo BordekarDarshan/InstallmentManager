@@ -118,7 +118,9 @@ function App() {
         createNewFeature={createNewFeature}
       ></PopUp>
       {paidInstallment.map((data) => (
-        <h1>{data.value}</h1>
+        <div className="paymentHistory">
+          <h1>{data.value}</h1>
+        </div>
       ))}
     </div>
   );
