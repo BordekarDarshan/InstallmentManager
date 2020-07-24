@@ -4,6 +4,7 @@ import Input from "./components/Input/Input";
 import { doBreakdown } from "./Util/doBreakdown";
 import { payInstallment } from "./Util/payInstallment";
 import "./App.css";
+import PopUp from "./components/ModalPop/PopUp";
 
 function App() {
   const [amount, setAmount] = useState(0);
@@ -13,6 +14,7 @@ function App() {
   const [lessInstallmentFeature, setLessInstallmentFeature] = useState(
     "adjust"
   );
+  const [show, setShow] = useState(false);
 
   const getAmount = (e) => {
     const { value } = e.target;
@@ -24,6 +26,21 @@ function App() {
     setBreakdown(value);
   };
 
+  const handleClose = () => {
+    setShow(false);
+  };
+
+  const adjustFeature = () => {
+    setLessInstallmentFeature("adjust");
+    console.log(lessInstallmentFeature);
+    handleClose();
+  };
+
+  const createNewFeature = () => {
+    setLessInstallmentFeature("createNew");
+    console.log(lessInstallmentFeature);
+    handleClose();
+  };
   return (
     <div className="container">
       <div className="inputInstallmentWrapper">
@@ -81,7 +98,7 @@ function App() {
                   setPaidInstallment,
                   paidInstallment,
                   lessInstallmentFeature,
-                  setLessInstallmentFeature
+                  setShow
                 )
               }
             >
@@ -90,7 +107,12 @@ function App() {
           </div>
         ))}
       </div>
-
+      <PopUp
+        show={show}
+        handleClose={handleClose}
+        adjustFeature={adjustFeature}
+        createNewFeature={createNewFeature}
+      ></PopUp>
       {paidInstallment.map((data) => (
         <h1>{data.value}</h1>
       ))}

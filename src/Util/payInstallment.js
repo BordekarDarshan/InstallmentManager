@@ -5,7 +5,7 @@ export const payInstallment = (
   setPaidInstallment,
   paidInstallment,
   lessInstallmentFeature,
-  setLessInstallmentFeature
+  setShow
 ) => {
   installmentStructure.map((content, i, next) => {
     if (index === i) {
@@ -71,6 +71,7 @@ export const payInstallment = (
       }
       // Input < next Installment.
       if (content.installment > content.value) {
+        setShow(true);
         if (lessInstallmentFeature === "adjust") {
           if (content.id === installmentStructure.length - 1) {
             let remain = content.installment - content.value;
