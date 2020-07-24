@@ -75,10 +75,12 @@ function App() {
             style={{ width: "18rem", margin: "2%" }}
           >
             <Input
+              type="number"
+              step="0.1"
               eachInstallment
               value={content.value}
               onChange={(e) => {
-                const value = Number(e.target.value);
+                const value = e.target.value;
                 setInstallmentStructure((installmentStructure) =>
                   installmentStructure.map((content, i) =>
                     i === index
