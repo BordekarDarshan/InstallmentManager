@@ -10,6 +10,9 @@ function App() {
   const [breakdown, setBreakdown] = useState(0);
   const [installmentStructure, setInstallmentStructure] = useState([]);
   const [paidInstallment, setPaidInstallment] = useState([]);
+  const [lessInstallmentFeature, setLessInstallmentFeature] = useState(
+    "adjust"
+  );
 
   const getAmount = (e) => {
     const { value } = e.target;
@@ -46,7 +49,10 @@ function App() {
       </div>
       <div className="installmentStructureWrapper">
         {installmentStructure.map((content, index) => (
-          <div className="card" style={{ width: "18rem", margin: "2%" }}>
+          <div
+            className="card border-0"
+            style={{ width: "18rem", margin: "2%" }}
+          >
             <Input
               eachInstallment
               value={content.value}
@@ -74,11 +80,12 @@ function App() {
                   installmentStructure,
                   setPaidInstallment,
                   paidInstallment,
-                  "adjust"
+                  lessInstallmentFeature,
+                  setLessInstallmentFeature
                 )
               }
             >
-              Pay {content.installment}
+              Pay Rs. {content.installment}
             </Button>
           </div>
         ))}
