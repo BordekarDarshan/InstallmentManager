@@ -31,6 +31,7 @@ export const payInstallment = (
 
         if (extraPayment <= elementNext.installment) {
           content.installment = 0;
+          installmentStructure.splice(i, 1);
           elementNext.installment = elementNext.installment - extraPayment;
           setInstallmentStructure([...installmentStructure]);
           setPaidInstallment([...paidInstallment, { ...content }]);
@@ -47,20 +48,11 @@ export const payInstallment = (
               }
               if (current.value >= current.installment) {
                 current.installment = 0;
-                setTimeout(() => {
-                  if (current.installment === 0) {
-                    const gg = installmentStructure.indexOf(current);
-                    if (gg > -1) {
-                      installmentStructure.splice(i, gg + 1);
-                      setInstallmentStructure([...installmentStructure]);
-                      console.log(current);
-                    }
-                  }
-                }, 1000);
               }
               if (current.value <= current.installment) {
                 current.installment = current.installment - current.value;
               }
+              installmentStructure.splice(index, 1);
               setInstallmentStructure([...installmentStructure]);
               setPaidInstallment([...paidInstallment, { ...content }]);
             } else {
@@ -68,20 +60,6 @@ export const payInstallment = (
 
               if (current.id === installmentStructure.length - 1) {
                 current.installment = current.installment - current.value;
-              }
-
-              if (current.value >= current.installment) {
-                current.installment = 0;
-                setTimeout(() => {
-                  if (current.installment === 0) {
-                    const gg = installmentStructure.indexOf(current);
-                    if (gg > -1) {
-                      installmentStructure.splice(i, gg + 1);
-                      setInstallmentStructure([...installmentStructure]);
-                      console.log(current);
-                    }
-                  }
-                }, 2000);
               }
 
               setInstallmentStructure([...installmentStructure]);
@@ -98,22 +76,24 @@ export const payInstallment = (
       }
       // Input < next Installment.
       if (content.installment > content.value) {
-        setShow(true);
         if (lessInstallmentFeature === "adjust") {
-          if (content.id === installmentStructure.length - 1) {
+          if (index === installmentStructure.length - 1) {
             let remain = content.installment - content.value;
+
             installmentStructure.splice(i, 1);
             setInstallmentStructure([
               ...installmentStructure,
               {
                 id: installmentStructure.length,
                 installment: remain,
-                value: "",
+                value: 0,
               },
             ]);
             setPaidInstallment([...paidInstallment, { ...content }]);
           } else {
+            console.log(content);
             let elementNext = next[i + 1];
+
             let remain = content.installment - content.value;
             elementNext.installment = elementNext.installment + remain;
             installmentStructure.splice(i, 1);
@@ -136,7 +116,7 @@ export const payInstallment = (
         }
       }
     }
-
+    console.log(installmentStructure);
     return true;
   });
 };

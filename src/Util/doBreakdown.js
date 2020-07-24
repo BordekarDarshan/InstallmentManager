@@ -8,7 +8,7 @@ export function doBreakdown(amount, breakdown, structure, setPaidInstallment) {
     return {
       id: index,
       installment: installment,
-      value: "",
+      value: 0,
     };
   });
   structure([...breakdownStructure]);
