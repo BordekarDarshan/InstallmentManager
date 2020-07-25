@@ -123,7 +123,7 @@ function App() {
         <div className="paymentHistory">
           {paidInstallment.map((data) => (
             <div className="box">
-              <span>Installment {data.id + 1}</span>
+              <span>Installment</span>
               <h1>Rs. {data.value}</h1>
             </div>
           ))}
