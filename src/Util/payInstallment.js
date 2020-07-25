@@ -4,8 +4,7 @@ export const payInstallment = (
   installmentStructure,
   setPaidInstallment,
   paidInstallment,
-  lessInstallmentFeature,
-  setShow
+  lessInstallmentFeature
 ) => {
   installmentStructure.map((content, i, next) => {
     if (index === i) {
@@ -52,7 +51,6 @@ export const payInstallment = (
               if (current.value <= current.installment) {
                 current.installment = current.installment - current.value;
               }
-
               setInstallmentStructure([...installmentStructure]);
               setPaidInstallment([...paidInstallment, { ...content }]);
             } else {
@@ -66,16 +64,19 @@ export const payInstallment = (
               setPaidInstallment([...paidInstallment, { ...content }]);
             }
           }
+          let a = installmentStructure.filter((data) => data.installment !== 0);
+          setInstallmentStructure([...a]);
         }
       }
       // Input === next Installment.
-      if (content.installment == content.value) {
+      if (content.installment === content.value) {
         installmentStructure.splice(i, 1);
         setInstallmentStructure([...installmentStructure]);
         setPaidInstallment([...paidInstallment, { ...content }]);
       }
       // Input < next Installment.
       if (content.installment > content.value) {
+        console.log(content);
         if (lessInstallmentFeature === "adjust") {
           if (index === installmentStructure.length - 1) {
             let remain = content.installment - content.value;
@@ -89,6 +90,7 @@ export const payInstallment = (
                 value: 0,
               },
             ]);
+
             setPaidInstallment([...paidInstallment, { ...content }]);
           } else {
             let elementNext = next[i + 1];
@@ -108,17 +110,12 @@ export const payInstallment = (
             {
               id: installmentStructure.length,
               installment: remain,
-              value: "",
+              value: 0,
             },
           ]);
           setPaidInstallment([...paidInstallment, { ...content }]);
         }
       }
-
-      let a = installmentStructure.filter((data) => data.installment === 0);
-
-      installmentStructure.splice(i, a.length);
-      setInstallmentStructure([...installmentStructure]);
     }
 
     return true;

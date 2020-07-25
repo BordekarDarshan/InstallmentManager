@@ -80,7 +80,7 @@ function App() {
               eachInstallment
               value={content.value}
               onChange={(e) => {
-                const value = e.target.value;
+                const value = Number(e.target.value);
                 setInstallmentStructure((installmentStructure) =>
                   installmentStructure.map((content, i) =>
                     i === index
@@ -103,8 +103,7 @@ function App() {
                   installmentStructure,
                   setPaidInstallment,
                   paidInstallment,
-                  lessInstallmentFeature,
-                  setShow
+                  lessInstallmentFeature
                 )
               }
             >
