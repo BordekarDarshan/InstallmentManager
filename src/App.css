@@ -15,6 +15,7 @@
 
 .paymentHistory {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .box {
