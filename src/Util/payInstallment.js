@@ -32,7 +32,9 @@ export const payInstallment = (
           content.installment = 0;
           installmentStructure.splice(i, 1);
           elementNext.installment = elementNext.installment - extraPayment;
-          setInstallmentStructure([...installmentStructure]);
+          let a = installmentStructure.filter((data) => data.installment !== 0);
+          setInstallmentStructure([...a]);
+
           setPaidInstallment([...paidInstallment, { ...content }]);
         } else {
           for (let index = i; index < installmentStructure.length; index++) {
@@ -56,7 +58,7 @@ export const payInstallment = (
             } else {
               let current = installmentStructure[index];
 
-              if (current.id === installmentStructure.length - 1) {
+              if (index === installmentStructure.length - 1) {
                 current.installment = current.installment - current.value;
               }
 
