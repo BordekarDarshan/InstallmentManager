@@ -1,5 +1,5 @@
 export function lessInstallment(
-  i,
+  currentIndex,
   content,
   installmentStructure,
   setInstallmentStructure,
@@ -13,7 +13,7 @@ export function lessInstallment(
     content,
     installmentStructure,
     setInstallmentStructure,
-    i,
+    currentIndex,
     setPaidInstallment,
     paidInstallment,
   ];
@@ -22,10 +22,11 @@ export function lessInstallment(
     content,
     installmentStructure,
     setInstallmentStructure,
-    i,
+    currentIndex,
     setPaidInstallment,
     paidInstallment,
   ];
+
   if (lessInstallmentFeature === "adjust") {
     if (index === installmentStructure.length - 1) {
       createNewInstallment(...createNewInstallmentParam);
@@ -43,13 +44,13 @@ function createNewInstallment(
   content,
   installmentStructure,
   setInstallmentStructure,
-  i,
+  currentIndex,
   setPaidInstallment,
   paidInstallment
 ) {
   let remain = content.installment - content.value;
 
-  installmentStructure.splice(i, 1);
+  installmentStructure.splice(currentIndex, 1);
   setInstallmentStructure([
     ...installmentStructure,
     {
@@ -68,15 +69,15 @@ function addjustInNextInstallment(
   content,
   installmentStructure,
   setInstallmentStructure,
-  i,
+  currentIndex,
   setPaidInstallment,
   paidInstallment
 ) {
-  let elementNext = next[i + 1];
+  let elementNext = next[currentIndex + 1];
 
   let remain = content.installment - content.value;
   elementNext.installment = elementNext.installment + remain;
-  installmentStructure.splice(i, 1);
+  installmentStructure.splice(currentIndex, 1);
   setInstallmentStructure([...installmentStructure]);
   setPaidInstallment([...paidInstallment, { ...content }]);
 }
