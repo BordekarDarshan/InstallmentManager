@@ -48,6 +48,7 @@ export const payInstallment = (
 
       // Input > Actual Amount
       if (content.value > mapTotalInstallment) {
+        alert("Enter a Valid Amount");
         return false;
       }
 

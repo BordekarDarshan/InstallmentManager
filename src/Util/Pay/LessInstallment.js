@@ -9,37 +9,32 @@ export function lessInstallment(
   index,
   next
 ) {
+  let createNewInstallmentParam = [
+    content,
+    installmentStructure,
+    setInstallmentStructure,
+    i,
+    setPaidInstallment,
+    paidInstallment,
+  ];
+  let addjustInNextInstallmentParam = [
+    next,
+    content,
+    installmentStructure,
+    setInstallmentStructure,
+    i,
+    setPaidInstallment,
+    paidInstallment,
+  ];
   if (lessInstallmentFeature === "adjust") {
     if (index === installmentStructure.length - 1) {
-      createNewInstallment(
-        content,
-        installmentStructure,
-        setInstallmentStructure,
-        i,
-        setPaidInstallment,
-        paidInstallment
-      );
+      createNewInstallment(...createNewInstallmentParam);
     } else {
-      addjustInNextInstallment(
-        next,
-        content,
-        installmentStructure,
-        setInstallmentStructure,
-        i,
-        setPaidInstallment,
-        paidInstallment
-      );
+      addjustInNextInstallment(...addjustInNextInstallmentParam);
     }
   }
   if (lessInstallmentFeature === "createNew") {
-    createNewInstallment(
-      content,
-      installmentStructure,
-      setInstallmentStructure,
-      i,
-      setPaidInstallment,
-      paidInstallment
-    );
+    createNewInstallment(...createNewInstallmentParam);
   }
 }
 
