@@ -11,8 +11,38 @@ export const payInstallment = (
   paidInstallment,
   lessInstallmentFeature
 ) => {
-  installmentStructure.map((content, i, next) => {
-    if (index === i) {
+  installmentStructure.map((content, currentIndex, next) => {
+    const moreInstallmentParam = [
+      currentIndex,
+      content,
+      installmentStructure,
+      setInstallmentStructure,
+      setPaidInstallment,
+      paidInstallment,
+      index,
+      next,
+    ];
+    const equalInstallmentParam = [
+      currentIndex,
+      content,
+      installmentStructure,
+      setInstallmentStructure,
+      setPaidInstallment,
+      paidInstallment,
+    ];
+    const lessInstallmentParam = [
+      currentIndex,
+      content,
+      installmentStructure,
+      setInstallmentStructure,
+      setPaidInstallment,
+      paidInstallment,
+      lessInstallmentFeature,
+      index,
+      next,
+    ];
+
+    if (index === currentIndex) {
       // Tracker
       let mapTotalInstallment = InstallmentMoreThanTotal(installmentStructure);
 
@@ -23,43 +53,17 @@ export const payInstallment = (
 
       // Input > Installment.
       if (content.value > content.installment) {
-        moreInstallment(
-          i,
-          content,
-          installmentStructure,
-          setInstallmentStructure,
-          setPaidInstallment,
-          paidInstallment,
-          index,
-          next
-        );
+        moreInstallment(...moreInstallmentParam);
       }
 
       // Input === next Installment.
       if (content.installment === content.value) {
-        equalInstallment(
-          i,
-          content,
-          installmentStructure,
-          setInstallmentStructure,
-          setPaidInstallment,
-          paidInstallment
-        );
+        equalInstallment(...equalInstallmentParam);
       }
 
       // Input < Installment.
       if (content.installment > content.value) {
-        lessInstallment(
-          i,
-          content,
-          installmentStructure,
-          setInstallmentStructure,
-          setPaidInstallment,
-          paidInstallment,
-          lessInstallmentFeature,
-          index,
-          next
-        );
+        lessInstallment(...lessInstallmentParam);
       }
     }
     return true;

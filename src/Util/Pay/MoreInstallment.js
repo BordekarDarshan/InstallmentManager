@@ -54,7 +54,9 @@ export function moreInstallment(
         setPaidInstallment([...paidInstallment, { ...content }]);
       }
     }
-    let a = installmentStructure.filter((data) => data.installment !== 0);
-    setInstallmentStructure([...a]);
+    let removeZero = installmentStructure.filter(
+      (data) => data.installment !== 0
+    );
+    setInstallmentStructure([...removeZero]);
   }
 }
