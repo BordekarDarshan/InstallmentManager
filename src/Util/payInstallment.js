@@ -1,3 +1,8 @@
+import { lessInstallment } from "./Pay/LessInstallment";
+import { moreInstallment } from "./Pay/MoreInstallment";
+import { equalInstallment } from "./Pay/EqualInstallment";
+import { InstallmentMoreThanTotal } from "./Pay/InstallmentMoreThanTotal";
+
 export const payInstallment = (
   index,
   setInstallmentStructure,
@@ -9,117 +14,54 @@ export const payInstallment = (
   installmentStructure.map((content, i, next) => {
     if (index === i) {
       // Tracker
-      let mapTotalInstallment = installmentStructure
-        .map((data) => data.installment)
-        .reduce((prev, next) => prev + next, 0);
+      let mapTotalInstallment = InstallmentMoreThanTotal(installmentStructure);
 
-      // Input > Actual Amout
+      // Input > Actual Amount
       if (content.value > mapTotalInstallment) {
-        alert("exceed");
         return false;
       }
 
+      // Input > Installment.
       if (content.value > content.installment) {
-        if (index === installmentStructure.length - 1) {
-          alert("exceed");
-          return false;
-        }
-        // Input > next Installment.
-        let extraPayment = content.value - content.installment;
-        let elementNext = next[i + 1];
-
-        if (extraPayment <= elementNext.installment) {
-          content.installment = 0;
-          installmentStructure.splice(i, 1);
-          elementNext.installment = elementNext.installment - extraPayment;
-          let a = installmentStructure.filter((data) => data.installment !== 0);
-          setInstallmentStructure([...a]);
-
-          setPaidInstallment([...paidInstallment, { ...content }]);
-        } else {
-          for (let index = i; index < installmentStructure.length; index++) {
-            if (index !== installmentStructure.length - 1) {
-              let current = installmentStructure[index];
-              let next = installmentStructure[index + 1];
-              let adv = current.value - current.installment;
-              if (adv < 0) {
-                next.value = 0;
-              } else {
-                next.value = adv;
-              }
-              if (current.value >= current.installment) {
-                current.installment = 0;
-              }
-              if (current.value <= current.installment) {
-                current.installment = current.installment - current.value;
-              }
-              setInstallmentStructure([...installmentStructure]);
-              setPaidInstallment([...paidInstallment, { ...content }]);
-            } else {
-              let current = installmentStructure[index];
-
-              if (index === installmentStructure.length - 1) {
-                current.installment = current.installment - current.value;
-              }
-
-              setInstallmentStructure([...installmentStructure]);
-              setPaidInstallment([...paidInstallment, { ...content }]);
-            }
-          }
-          let a = installmentStructure.filter((data) => data.installment !== 0);
-          setInstallmentStructure([...a]);
-        }
+        moreInstallment(
+          i,
+          content,
+          installmentStructure,
+          setInstallmentStructure,
+          setPaidInstallment,
+          paidInstallment,
+          index,
+          next
+        );
       }
+
       // Input === next Installment.
       if (content.installment === content.value) {
-        installmentStructure.splice(i, 1);
-        setInstallmentStructure([...installmentStructure]);
-        setPaidInstallment([...paidInstallment, { ...content }]);
+        equalInstallment(
+          i,
+          content,
+          installmentStructure,
+          setInstallmentStructure,
+          setPaidInstallment,
+          paidInstallment
+        );
       }
-      // Input < next Installment.
+
+      // Input < Installment.
       if (content.installment > content.value) {
-        console.log(content);
-        if (lessInstallmentFeature === "adjust") {
-          if (index === installmentStructure.length - 1) {
-            let remain = content.installment - content.value;
-
-            installmentStructure.splice(i, 1);
-            setInstallmentStructure([
-              ...installmentStructure,
-              {
-                id: installmentStructure.length,
-                installment: remain,
-                value: 0,
-              },
-            ]);
-
-            setPaidInstallment([...paidInstallment, { ...content }]);
-          } else {
-            let elementNext = next[i + 1];
-
-            let remain = content.installment - content.value;
-            elementNext.installment = elementNext.installment + remain;
-            installmentStructure.splice(i, 1);
-            setInstallmentStructure([...installmentStructure]);
-            setPaidInstallment([...paidInstallment, { ...content }]);
-          }
-        }
-        if (lessInstallmentFeature === "createNew") {
-          let remain = content.installment - content.value;
-          installmentStructure.splice(i, 1);
-          setInstallmentStructure([
-            ...installmentStructure,
-            {
-              id: installmentStructure.length,
-              installment: remain,
-              value: 0,
-            },
-          ]);
-          setPaidInstallment([...paidInstallment, { ...content }]);
-        }
+        lessInstallment(
+          i,
+          content,
+          installmentStructure,
+          setInstallmentStructure,
+          setPaidInstallment,
+          paidInstallment,
+          lessInstallmentFeature,
+          index,
+          next
+        );
       }
     }
-
     return true;
   });
 };
