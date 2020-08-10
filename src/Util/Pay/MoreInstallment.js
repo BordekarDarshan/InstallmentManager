@@ -15,10 +15,6 @@ export function moreInstallment(
     content.installment = 0;
     installmentStructure.splice(i, 1);
     elementNext.installment = elementNext.installment - extraPayment;
-    let a = installmentStructure.filter((data) => data.installment !== 0);
-    setInstallmentStructure([...a]);
-
-    setPaidInstallment([...paidInstallment, { ...content }]);
   } else {
     for (let index = i; index < installmentStructure.length; index++) {
       if (index !== installmentStructure.length - 1) {
@@ -36,22 +32,18 @@ export function moreInstallment(
         if (current.value <= current.installment) {
           current.installment = current.installment - current.value;
         }
-        setInstallmentStructure([...installmentStructure]);
-        setPaidInstallment([...paidInstallment, { ...content }]);
       } else {
         let current = installmentStructure[index];
-
         if (index === installmentStructure.length - 1) {
           current.installment = current.installment - current.value;
         }
-
-        setInstallmentStructure([...installmentStructure]);
-        setPaidInstallment([...paidInstallment, { ...content }]);
       }
     }
-    let removeZero = installmentStructure.filter(
-      (data) => data.installment !== 0
-    );
-    setInstallmentStructure([...removeZero]);
   }
+  // Removes all element whose installments have already been paid in advance.
+  let removeZero = installmentStructure.filter(
+    (data) => data.installment !== 0
+  );
+  setInstallmentStructure([...removeZero]);
+  setPaidInstallment([...paidInstallment, { ...content }]);
 }
