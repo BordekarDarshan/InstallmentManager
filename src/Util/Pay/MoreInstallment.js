@@ -5,13 +5,8 @@ export function moreInstallment(
   setInstallmentStructure,
   setPaidInstallment,
   paidInstallment,
-  index,
   next
 ) {
-  if (index === installmentStructure.length - 1) {
-    alert("exceed");
-    return false;
-  }
   // Input > next Installment.
   let extraPayment = content.value - content.installment;
   let elementNext = next[i + 1];

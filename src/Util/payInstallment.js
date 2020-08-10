@@ -19,7 +19,6 @@ export const payInstallment = (
       setInstallmentStructure,
       setPaidInstallment,
       paidInstallment,
-      index,
       next,
     ];
     const equalInstallmentParam = [
