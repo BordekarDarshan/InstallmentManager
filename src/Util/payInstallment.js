@@ -43,10 +43,10 @@ export const payInstallment = (
 
     if (index === currentIndex) {
       // Tracker
-      let mapTotalInstallment = InstallmentMoreThanTotal(installmentStructure);
+      let totalAmount = InstallmentMoreThanTotal(installmentStructure);
 
       // Input > Actual Amount
-      if (content.value > mapTotalInstallment) {
+      if (content.value > totalAmount) {
         alert("Enter a Valid Amount");
         return false;
       }
