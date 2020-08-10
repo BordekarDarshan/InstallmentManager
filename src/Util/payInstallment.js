@@ -11,7 +11,7 @@ export const payInstallment = (
   paidInstallment,
   lessInstallmentFeature
 ) => {
-  installmentStructure.map((content, currentIndex, next) => {
+  installmentStructure.forEach((content, currentIndex, next) => {
     const moreInstallmentParam = [
       currentIndex,
       content,
@@ -66,6 +66,5 @@ export const payInstallment = (
         lessInstallment(...lessInstallmentParam);
       }
     }
-    return true;
   });
 };
