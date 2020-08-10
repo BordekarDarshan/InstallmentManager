@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import Button from "./components/Button/Button";
+
 import Input from "./components/Input/Input";
 import { doBreakdown } from "./Util/doBreakdown";
 import { payInstallment } from "./Util/payInstallment";
 import "./App.css";
 import PopUp from "./components/ModalPop/PopUp";
+import CustomButton from "./components/CustomButton/CustomButton";
 
 function App() {
   const [amount, setAmount] = useState(0);
@@ -32,13 +33,11 @@ function App() {
 
   const adjustFeature = () => {
     setLessInstallmentFeature("adjust");
-    console.log(lessInstallmentFeature);
     handleClose();
   };
 
   const createNewFeature = () => {
     setLessInstallmentFeature("createNew");
-    console.log(lessInstallmentFeature);
     handleClose();
   };
   return (
@@ -55,7 +54,7 @@ function App() {
           inputInstallment
         ></Input>
 
-        <Button
+        <CustomButton
           onClick={() =>
             doBreakdown(
               amount,
@@ -66,7 +65,7 @@ function App() {
           }
         >
           Make Installment
-        </Button>
+        </CustomButton>
       </div>
       <div className="installmentStructureWrapper">
         {installmentStructure.map((content, index) => (
@@ -94,7 +93,7 @@ function App() {
               }}
             ></Input>
 
-            <Button
+            <CustomButton
               eachInstallmentButton
               onClick={() =>
                 payInstallment(
@@ -108,7 +107,7 @@ function App() {
               }
             >
               Pay Rs. {content.installment}
-            </Button>
+            </CustomButton>
           </div>
         ))}
       </div>
