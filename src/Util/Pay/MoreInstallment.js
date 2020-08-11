@@ -41,9 +41,9 @@ export function moreInstallment(
     }
   }
   // Removes all element whose installments have already been paid in advance.
-  let removeZero = installmentStructure.filter(
+  let removePaidInstallment = installmentStructure.filter(
     (data) => data.installment !== 0
   );
-  setInstallmentStructure([...removeZero]);
+  setInstallmentStructure([...removePaidInstallment]);
   setPaidInstallment([...paidInstallment, { ...content }]);
 }
